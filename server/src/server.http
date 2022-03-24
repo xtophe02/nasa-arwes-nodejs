@@ -1,0 +1,22 @@
+GET http://localhost:8000/v1/planets HTTP/1.1
+
+###
+GET http://localhost:8000/v1/launchs?page=1&limit=5 HTTP/1.1
+###
+GET http://localhost:8000/v1/launchs HTTP/1.1
+
+###
+POST http://localhost:8000/v1/launchs HTTP/1.1
+content-type: application/json
+
+{
+  "mission": "Start a new begining!",
+  "rocket": "Falcon",
+  "target": "Kepler-442 b",
+  "launchDate": "January 17, 2038"
+}
+
+### 
+DELETE  http://localhost:8000/v1/launchs/101 HTTP/1.1
+###
+GET https://api.spacexdata.com/v4/launches/ HTTP/1.1
