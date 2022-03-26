@@ -6,16 +6,23 @@ on:
     branches: [main]
 jobs:
   build:
+    env:
+      # disables watchmode
+      CI: true
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
     runs-on: ubuntu-latest
     steps:
       #fetchs the code from our repo
       - uses: actions/checkout@v2
       #install node on ubuntu
-      - name: Use Nodejs version 16
+      - name: Use Nodejs version ${{matrix.node-version}}
         uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: ${{matrix.node-version}}
       - run: npm install
       - run: npm run build --prefix client
+      - npm: test
   # deploy:
   #   needs: build
