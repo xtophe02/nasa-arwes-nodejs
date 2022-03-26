@@ -4,8 +4,9 @@ const { loadPlanetData } = require("../../models/planets.model.js");
 const { connectDB, closeDB } = require("../../services/mongo");
 
 beforeAll(async () => {
+  await connectDB();
   await loadPlanetData();
-  return await connectDB();
+  return;
 });
 
 afterAll(async () => await closeDB());
