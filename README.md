@@ -22,3 +22,7 @@ _scripts to have the react-build served by the backend_
 - pm2: to creater clusters for load balance
 - mongoose: connect to mongodb
 - axios: to query apis
+
+## Others
+
+- github actions
