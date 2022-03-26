@@ -1,8 +1,10 @@
 const request = require("supertest");
 const app = require("../../app.js");
+const { loadPlanetData } = require("../../models/planets.model.js");
 const { connectDB, closeDB } = require("../../services/mongo");
 
 beforeAll(async () => {
+  await loadPlanetData();
   return await connectDB();
 });
 
@@ -51,11 +53,16 @@ describe("Test POST /v1/launch", () => {
 describe("Test DELETE /v1/launch/:id", () => {
   test("It should delete latestFlight", async () => {
     const { body } = await request(app).get("/v1/launchs");
-    const { flightNumber } = body.find((el) => el.rocket === "from jest");
-    await request(app).delete(`/v1/launchs/${flightNumber}`).expect(204);
+    const launch = body.find((el) => {
+      if (el.rocket === "from jest") {
+        return el;
+      }
+    });
+    // console.log(launch);
+    await request(app).delete(`/v1/launchs/${launch.flightNumber}`).expect(204);
   });
   test("It should delete latestFlight", async () => {
-    const res = await request(app).delete(`/v1/launchs/1`).expect(400);
+    const res = await request(app).delete(`/v1/launchs/99999`).expect(400);
     expect(res.body.error).toEqual("launch doesn't exists");
   });
 });
